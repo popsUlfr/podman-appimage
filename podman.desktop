@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=podman
+Comment=Tool and library for running OCI-based containers in pods
+TryExec=podman
+Exec=podman
+Icon=podman
+Terminal=true
+Categories=System;Development;Building;ConsoleOnly;
