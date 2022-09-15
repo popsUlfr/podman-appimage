@@ -58,7 +58,7 @@ root_setup() {
 
 rootless_setup() {
     asroot=''
-    if [ "$(sysctl -n kernel.unprivileged_userns_clone >&2 || echo 1)" -ne 1 ]
+    if [ "$(sysctl -e -n kernel.unprivileged_userns_clone)" = "0" ]
     then
         echo "WARNING: kernel.unprivileged_userns_clone not set to 1." >&2
         asroot="${asroot}sysctl kernel.unprivileged_userns_clone=1\n"

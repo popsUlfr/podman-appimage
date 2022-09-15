@@ -12,7 +12,7 @@ cleanup() {
         rm -rf "$BUILD_DIR"
     fi
 }
-#trap cleanup EXIT
+trap cleanup EXIT
 
 cd "$BUILD_DIR"
 
@@ -103,6 +103,7 @@ export CXXFLAGS="$CFLAGS"
 export LDFLAGS="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now"
 export RUSTFLAGS="-C opt-level=2"
 export PKG_CONFIG_PATH="${PKG_CONFIG_PATH:-}:/usr/lib/pkgconfig:/usr/lib64/pkgconfig"
+export MAKEFLAGS="-j$(nproc)"
 
 export real_pkgdir=/
 export pkgdir="$BUILD_DIR/out"
@@ -268,7 +269,7 @@ echo "Building containers-common..."
     pkgname=containers-common
     pkgver=0.49.1
     _image_pkgver=5.22.0
-    _podman_pkgver=4.2.0
+    _podman_pkgver=4.2.1
     _shortnames_pkgver=2022.02.08
     _skopeo_pkgver=1.9.2
     _storage_pkgver=1.42.0
@@ -282,7 +283,7 @@ echo "Building containers-common..."
     sha512sum -c "image-$_image_pkgver.tar.gz.sha512"
 
     curl -sSLo "podman-$_podman_pkgver.tar.gz" "https://github.com/containers/podman/archive/v$_podman_pkgver.tar.gz"
-    echo "bc9e28d9938127f91be10ea8bc6c6f638a01d74d120efad5ad1e72c5f7b893685871e83872434745bc72ecaca430355b0f59d302660e8b4a53cc88a88cc37f9c podman-$_podman_pkgver.tar.gz" > "podman-$_podman_pkgver.tar.gz.sha512"
+    echo "a8a6e3228c1cb6860bb27515bd081b5c395a17bd69fab8797758b84631d08d2389e554621080e66ecc04818c1c4d132ea6ed0edfedcfea6d7886a70ebc95297d podman-$_podman_pkgver.tar.gz" > "podman-$_podman_pkgver.tar.gz.sha512"
     sha512sum -c "podman-$_podman_pkgver.tar.gz.sha512"
 
     curl -sSLo "skopeo-$_skopeo_pkgver.tar.gz" "https://github.com/containers/skopeo/archive/v$_skopeo_pkgver.tar.gz"
@@ -420,13 +421,13 @@ ldconfig
 echo "Building btrfs-progs..."
 (
     pkgname=btrfs-progs
-    pkgver=5.19
+    pkgver=5.19.1
 
     # makedepends=('git' 'asciidoc' 'xmlto' 'systemd' 'python' 'python-setuptools' 'e2fsprogs' 'reiserfsprogs' 'python-sphinx')
     # depends=('glibc' 'util-linux-libs' 'lzo' 'zlib' 'zstd' 'libgcrypt')
 
     curl -sSLo "$pkgname-v$pkgver.tar.xz" "https://www.kernel.org/pub/linux/kernel/people/kdave/btrfs-progs/btrfs-progs-v$pkgver.tar.xz"
-    echo "1fbcf06e4b2f80e7a127fd687ed4625a5b74fa674fe212c836ff70e0edfcccf9 $pkgname-v$pkgver.tar.xz" > "$pkgname-v$pkgver.tar.xz.sha256"
+    echo "26429e540343ccc7f5d4b3f8f42b916713280e898c5471da705026ef6d2c10a6 $pkgname-v$pkgver.tar.xz" > "$pkgname-v$pkgver.tar.xz.sha256"
     sha256sum -c "$pkgname-v$pkgver.tar.xz.sha256"
 
     tar -xf "$pkgname-v$pkgver.tar.xz"
@@ -509,7 +510,7 @@ cp "$OUT_DIR/linuxdeploy-plugin-podman.sh" "$OUT_DIR/entrypoint.sh" .
 cp "$OUT_DIR/podman-shell" "$pkgdir/usr/bin"
 
 clean_pkgdir
-export OUTPUT="podman-4.2.1-x86_64.AppImage"
+export OUTPUT="podman-4.2.1-r1-x86_64.AppImage"
 find "$pkgdir" -type f -executable \
     -exec sh -c 'file -b "$1" | grep -q "^ELF "' _ '{}' \; \
     -printf '--deploy-deps-only=%p\0' \
