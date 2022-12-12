@@ -1,5 +1,6 @@
 #!/bin/sh
 set -e
+
 export PATH="$APPDIR/usr/bin:$PATH"
 
 conf_setup() {

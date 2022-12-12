@@ -1,58 +1,73 @@
-# Podman appimage
+<img src="https://raw.githubusercontent.com/containers/common/main/logos/podman-logo-full-vert.png" height="200" />
+
+# Podman AppImage: A portal tool for managing OCI containers and pods
 
 This is a portable [AppImage](https://appimage.org/) for [podman](https://podman.io/).
 
-This project was mostly created to ease the access to podman on platforms where it's not straightforward to get it from the package manager (e.g.: read-only rootfs) like [SteamOS](https://help.steampowered.com/en/faqs/view/1b71-edf2-eb6d-2bb3) used on Valve's [Steam Deck](https://www.steamdeck.com/).
+This project is intended to reduce the burden to access podman on platforms where it may not be available (e.g. [SteamOS 3.x](https://help.steampowered.com/en/faqs/view/1b71-edf2-eb6d-2bb3)), which is used on Valve's [Steam Deck](https://www.steamdeck.com/).
 
-But it should also work as portable podman solution in any other environment.
+It should also work as portable Podman solution on other Linux distributions.
 
-The AppImage's entrypoint does the necessary setup to get a working environment and should generally be used in [rootless](https://github.com/containers/podman/blob/main/docs/tutorials/rootless_tutorial.md) mode (the user will be prompted for root access for the first time setup to configure the necessary files to get a working rootless mode). **root mode** does work too if really needed.
-
-<img src="https://raw.githubusercontent.com/containers/common/main/logos/podman-logo-full-vert.png" height="200" />
+The AppImage's entrypoint will perform the necessary steps to setup a working [Rootless](https://github.com/containers/podman/blob/main/docs/tutorials/rootless_tutorial.md) environment. The user will be prompted for root during the first run to complete some necessary setup steps. If needed, can also be used in **Rootful mode**.
 
 ## Releases
 
-Head on over to the [Releases](https://github.com/popsUlfr/podman-appimage/releases) for the latest builds.
+Check the [Releases](https://github.com/popsUlfr/podman-appimage/releases) section for the latest builds.
 
-## Usage
+## Basic Usage
 
-By default launching the AppImage will open a `podman-shell` session:
+By default, launching the AppImage will open a `podman-shell` session:
 
-![](data/Screenshot_20220908_211807.png)
+![](assets/Screenshot_20220908_211807.png)
 
-In it you have access to the various podman commands: https://docs.podman.io/en/latest/Commands.html
+See the following resource for more details about the various [podman commands](https://docs.podman.io/en/latest/Commands.html).
 
-You can also rename the appimage or more practically, create a symlink to it to quickly access a specific binary.
+You can rename the AppImage or create a symlink to it and refer to the binary name to access a specific binary e.g. podman.
 
-For instance to access podman directly without going through the `podman-shell` you can do the following:
+For example, access podman directly without using `podman-shell` by creating the following symlink:
+
 ```sh
 ln -s podman-*.AppImage podman
 ```
-And invoke `podman` directly:
+
+Noww invoke `podman` directly:
+
 ```sh
 ./podman info
 ```
-The AppImage currently includes the following binaries:
+
+```sh
+./podman run quay.io/podman/hello
 ```
-btrfs            btrfs-image         catatonit  criu         docker          podman
-btrfsck          btrfs-map-logical   compel     criu-ns      fsck.btrfs      podman-remote
-btrfs-convert    btrfs-select-super  conmon     crun         fuse-overlayfs  podman-shell
-btrfs-find-root  btrfstune           crit       crun.static  mkfs.btrfs      slirp4netns
+
+The Podman AppImage includes the following binaries:
+
+```
+btrfs            btrfs-image      catatonit         criu                  podman           btrfsck          btrfs-map-logical compel                  fsck.btrfs       podman-remote    btrfs-convert     btrfs-select-super  conmon           crun             fuse-overlayfs    podman-shell     btrfs-find-root  btrfstune        crit              crun-static
+mkfs.btrfs       slirp4netns      docker            criu-ns
+```
+
+The AppImage contents can be extracted to a directory using the following command:
+
+```sh
+./podman-*.AppImage --appimage-extract
 ```
 
 ## Build
 
-Install `podman` through your package manager and then simply run:
+To build, install `podman` from your package manager, clone this repo and then simply run the build script:
+
 ```sh
 ./build.sh
 ```
 
-A `podman-*.AppImage` will created in the current folder.
+Once it's done building, a `podman-*.AppImage` will be found in the same directory.
 
-CentOS 8 is used as base for building. At first CentOS 7 was considered but the systemd version was too old to build the most recent podman version and dependencies.
+CentOS Stream 8 is used as base for building.
 
 ## Credits
 
-- [Arch Linux](https://archlinux.org/) for providing the build recipes for the packages and the wiki ressources
-- [podman](https://github.com/containers/podman) for being an awesome container tool
-- [AppImage](https://appimage.org/) for being a very neat portable packaging solution
+- [Arch Linux](https://archlinux.org/), for providing the build recipes for the packages and the wiki ressources
+- [CentOS Project](https://www.centos.org/), for providing the image used to build podman and it's depedencies from source
+- [podman](https://github.com/containers/podman), for being an awesome daemonless container tool
+- [AppImage](https://appimage.org/), for being a very neat portable packaging solution

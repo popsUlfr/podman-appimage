@@ -1,6 +1,4 @@
-#! /bin/bash
-
-# exit whenever a command called in this script fails
+#!/usr/bin/env bash
 set -e
 
 appdir=""
