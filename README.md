@@ -1,6 +1,6 @@
 <img src="https://raw.githubusercontent.com/containers/common/main/logos/podman-logo-full-vert.png" height="200" />
 
-# Podman AppImage: A portal tool for managing OCI containers and pods
+# Podman-AppImage: A portable tool for managing OCI containers and pods
 
 This is a portable [AppImage](https://appimage.org/) for [podman](https://podman.io/).
 
@@ -67,7 +67,7 @@ CentOS Stream 8 is used as base for building.
 
 ## Credits
 
-- [Arch Linux](https://archlinux.org/), for providing the build recipes for the packages and the wiki ressources
-- [CentOS Project](https://www.centos.org/), for providing the image used to build podman and it's depedencies from source
-- [podman](https://github.com/containers/podman), for being an awesome daemonless container tool
-- [AppImage](https://appimage.org/), for being a very neat portable packaging solution
+- [Arch Linux](https://archlinux.org/): for providing the build recipes for the packages and the wiki resources
+- [CentOS Project](https://www.centos.org/): for providing the image used to build podman and it's depedencies from source
+- [podman](https://github.com/containers/podman): for being an awesome daemonless container tool
+- [AppImage](https://appimage.org/): for being a very neat portable packaging solution
