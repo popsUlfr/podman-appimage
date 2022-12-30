@@ -1,3 +1,3 @@
-#!/bin/bash
+#!/usr/bin/env bash
 export PS1='\[\e[36m\](\[\e[0m\]\u\[\e[36m\]@\[\e[0m\]\[\e[35m\]podman-shell\[\e[0m\]\[\e[36m\]:\[\e[0m\]\W\[\e[36m\]) $\[\e[0m\] '
 exec bash --rcfile <(echo 'unset PROMPT_COMMAND'; echo "PS1='$PS1'") -i "$@"
